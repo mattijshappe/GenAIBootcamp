@@ -78,3 +78,10 @@ annotate mattijsHappe_38Srv.CustomerMessages with @UI.SelectionFields: [
   customerMessageID
 ];
 
+annotate  mattijsHappe_38Srv.ProductFAQ with {
+
+  ID @title: 'FAQ ID';
+  issue @title: 'Issue';
+  question @title: 'Question';
+  answer @title: 'Answer';
+};

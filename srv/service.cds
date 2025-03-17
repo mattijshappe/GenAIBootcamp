@@ -15,6 +15,15 @@ service mattijsHappe_38Srv
             ServiceOrder,
             ServiceOrderDescription
         };
+@odata.draft.enabled
+entity ProductFAQ as projection on my.ProductFAQ
+{
+        ID,
+        issue,
+        question,
+        answer
+};
+
 }
 
 annotate mattijsHappe_38Srv with @requires :

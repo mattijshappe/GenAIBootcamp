@@ -32,3 +32,12 @@ annotate CustomerMessages with @assert.unique :
 {
     customerMessageID : [ customerMessageID ],
 };
+
+entity ProductFAQ
+{
+    key ID : Integer;
+    issue : LargeString;
+    question : LargeString;
+    answer : LargeString;
+    embedding : Vector(1536);
+}
