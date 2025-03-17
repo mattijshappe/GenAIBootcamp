@@ -101,3 +101,59 @@ async function preprocessCustomerMassage(titleCustomerLanguage, fullMessageCusto
 module.exports = {
     preprocessCustomerMassage,
 }
+async function generateResponseTechMessage(fullMessageCustomerLanguage) {
+    // Constructs a prompt to generate a response for a technical message based on given FAQ items, customer issue, and message.
+    const prompt = `
+    Generate a helpful reply to the following customer message:
+    newCustomerMessage: {{?fullMessageCustomerLanguage}}
+    Produce the reply in two languages: in the original language of newCustomerMessage and in English. Return the result in the following JSON template:
+    {
+        suggestedResponseEnglish: Text,
+        suggestedResponseCustomerLanguage: Text
+    }`;
+
+    try {
+        // Creates an orchestration client to handle the prompt.
+        const orchestrationClient = await createOrchestrationClient(prompt);
+        const response = await orchestrationClient.chatCompletion({
+            inputParams: {fullMessageCustomerLanguage }
+        });
+        return JSON.parse(response.getContent());
+    } catch (error) {
+        // Logs an error if the response generation fails and throws a new error.
+        LOG.error('Error generating tech message response:', error);
+        throw new Error('Response generation service failed.');
+    }
+}
+
+async function generateResponseOtherMessage(messageSentiment, fullMessageCustomerLanguage) {
+    // Constructs a prompt to generate either an apology or gratitude message based on the sentiment of the customer's message.
+    const messageType = messageSentiment === 'Negative' ? 'a "we are sorry" note' : 'a gratitude note';
+    const prompt = `
+    Generate {{?messageType}} to the newCustomerMessage:
+    newCustomerMessage: {{?fullMessageCustomerLanguage}}
+    Produce the reply in two languages: in the original language of newCustomerMessage and in English. Return the result in the following JSON template:
+    {
+        suggestedResponseEnglish: Text,
+        suggestedResponseCustomerLanguage: Text
+    }`;
+
+    try {
+        // Creates an orchestration client to handle the prompt.
+        const orchestrationClient = await createOrchestrationClient(prompt);
+        const response = await orchestrationClient.chatCompletion({
+            inputParams: { messageType, fullMessageCustomerLanguage }
+        });
+        return JSON.parse(response.getContent());
+    } catch (error) {
+        // Logs an error if the response generation fails and throws a new error.
+        LOG.error('Error generating other message response:', error);
+        throw new Error('Response generation service failed.');
+    }
+}
+
+module.exports = {
+    preprocessCustomerMassage, 
+    generateResponseTechMessage, 
+    generateResponseOtherMessage,
+};

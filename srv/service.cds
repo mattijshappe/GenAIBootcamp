@@ -7,7 +7,21 @@ service mattijsHappe_38Srv
 {
     @odata.draft.enabled
     entity CustomerMessages as
-        projection on my.CustomerMessages;
+        projection on my.CustomerMessages
+        actions
+        {
+@(
+cds.odata.bindingparameter.name: '_it',
+  Common.SideEffects: {TargetProperties: [
+  '_it/suggestedResponseEnglish',
+  '_it/suggestedResponseCustomerLanguage'
+ ]}
+)
+
+            action Action1
+            (
+            );
+        };
 
     entity A_ServiceOrder as
         projection on S4HCP_ServiceOrder_Odata.A_ServiceOrder
@@ -15,15 +29,16 @@ service mattijsHappe_38Srv
             ServiceOrder,
             ServiceOrderDescription
         };
-@odata.draft.enabled
-entity ProductFAQ as projection on my.ProductFAQ
-{
-        ID,
-        issue,
-        question,
-        answer
-};
 
+    @odata.draft.enabled
+    entity ProductFAQ as
+        projection on my.ProductFAQ
+        {
+            ID,
+            issue,
+            question,
+            answer
+        };
 }
 
 annotate mattijsHappe_38Srv with @requires :
