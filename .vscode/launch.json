@@ -18,7 +18,26 @@
       "envFile": "${workspaceFolder}/env/.env1",
       "env": {
         "run.config": "{\"handlerId\":\"lcap_run_config_handler_id\",\"runnableId\":\"{\\\"projectPath\\\":\\\"/home/user/projects/MattijsHappe_38\\\",\\\"profileName\\\":\\\"\\\"}\"}",
-        "runConfigurations": "{\"dbBinding\":{\"type\":\"SAP HANA Cloud\",\"dbName\":\"db1_g38\"}}"
+        "runConfigurations": "{\"dbBinding\":{\"type\":\"SAP HANA Cloud\",\"dbName\":\"db1_g38\"},\"odataBinding\":{\"S4HCP_ServiceOrder_Odata\":{\"destination\":\"S4HCP-ServiceOrder-Odata\",\"type\":\"Destination\",\"path\":\"\"}},\"authBinding\":{\"authType\":\"Mocked\"}}"
+      }
+    },
+    {
+      "name": "S4HCP-ServiceOrder-Odata",
+      "runtimeExecutable": "cds",
+      "request": "launch",
+      "killBehavior": "polite",
+      "args": [
+        "watch",
+        "--open"
+      ],
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "type": "pwa-node",
+      "cwd": "${workspaceFolder}/",
+      "preLaunchTask": "dev-project",
+      "envFile": "${workspaceFolder}/env/.env2",
+      "env": {
+        "run.config": "{\"handlerId\":\"lcap_run_config_handler_id\",\"runnableId\":\"{\\\"projectPath\\\":\\\"/home/user/projects/MattijsHappe_38/\\\",\\\"profileName\\\":\\\"\\\"}\"}"
       }
     }
   ]
