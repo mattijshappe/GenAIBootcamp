@@ -6,6 +6,7 @@ const LCAPApplicationService = require('@sap/low-code-event-handler');
 const customermessage_Logic_PreprocessMessages = require('./code/customermessage-logic-preprocessMessages');
 const productfaq_Logic_EmbedFAQ = require('./code/productfaq-logic-embedFAQ');
 const customermessage_Logic_GenerateReply = require('./code/customermessage-logic-generateReply');
+const customermessage_Logic_MaintainSO = require('./code/customermessage-logic-maintainSO');
 
 class mattijsHappe_38Srv extends LCAPApplicationService {
     async init() {
@@ -20,6 +21,10 @@ class mattijsHappe_38Srv extends LCAPApplicationService {
 
         this.on('Action1', 'CustomerMessages', async (request) => {
             return customermessage_Logic_GenerateReply(request);
+        });
+
+        this.on('Action2', 'CustomerMessages', async (request) => {
+            return customermessage_Logic_MaintainSO(request);
         });
 
         return super.init();
